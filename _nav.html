@@ -1,0 +1,34 @@
+<!--
+  _nav.html  —  Copy this block into every page between <body> and the page content.
+  Set the class="active" on the correct .nav-link for each page.
+-->
+
+<div class="utility-bar">
+  <span>Scholarly Online Library — Access to Knowledge</span>
+  <div class="utility-bar-links">
+    <a href="#">Register</a>
+    <a href="#">Sign In</a>
+    <a href="#">Help</a>
+  </div>
+</div>
+
+<nav class="main-nav">
+  <a class="nav-brand" href="index.html">
+    <div class="nav-logo-icon">S</div>
+    <div class="nav-brand-text">Scholarly<span>.</span></div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="browse.html">Browse</a>
+    <a class="nav-link" href="about.html">About Us</a>
+    <a class="nav-link" href="reviews.html">Reviews</a>
+  </div>
+  <div class="nav-search">
+    <input type="text" id="searchInput" placeholder="Search books, authors, topics…" />
+    <button onclick="handleSearch()">Search</button>
+  </div>
+</nav>
+
+<div class="toast" id="toast">
+  <span id="toastMsg">✓ Action completed</span>
+</div>

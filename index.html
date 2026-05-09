@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scholarly – Online Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+  <!-- ── Nav (shared) ── -->
+  <div class="utility-bar">
+    <span>Scholarly Online Library — Access to Knowledge</span>
+    <div class="utility-bar-links">
+      <a href="#">Register</a>
+      <a href="#">Sign In</a>
+      <a href="#">Help</a>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <a class="nav-brand" href="index.html">
+      <div class="nav-logo-icon">S</div>
+      <div class="nav-brand-text">Scholarly<span>.</span></div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link active" href="index.html">Home</a>
+      <a class="nav-link" href="browse.html">Browse</a>
+      <a class="nav-link" href="about.html">About Us</a>
+      <a class="nav-link" href="reviews.html">Reviews</a>
+    </div>
+    <div class="nav-search">
+      <input type="text" id="searchInput" placeholder="Search books, authors, topics…" />
+      <button onclick="handleSearch()">Search</button>
+    </div>
+  </nav>
+  <div class="toast" id="toast"><span id="toastMsg">✓ Action completed</span></div>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">The World's Knowledge — At Your Fingertips</div>
+      <h1>Discover, Read &amp; Download Scholarly Books</h1>
+      <p>Explore thousands of peer-reviewed books across science, technology, humanities, and more. Free access for registered members.</p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="browse.html">Browse Library</a>
+        <a class="btn-outline" href="about.html">About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats Bar ── -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-number">48,000+</div>
+        <div class="stat-label">Books Available</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Subject Categories</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">320+</div>
+        <div class="stat-label">Expert Authors</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Library Branches</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Featured Book ── -->
+  <section class="section" style="background: var(--off-white);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title"><span>Editor's Choice</span>Featured This Month</div>
+      </div>
+      <div class="featured-book">
+        <div class="featured-cover" style="background: linear-gradient(135deg, #00264d, #007a8a);">
+          <div class="featured-cover-title">Principles of Machine Learning</div>
+        </div>
+        <div class="featured-body">
+          <div class="featured-label">⭐ Featured Pick</div>
+          <div class="featured-title">Principles of Machine Learning</div>
+          <div class="featured-author">Dr. Amelia T. Hartwood &amp; Prof. Nasser Al-Rashid</div>
+          <p class="featured-desc">A comprehensive and accessible introduction to the mathematical foundations and real-world applications of machine learning. Covers supervised learning, neural networks, reinforcement learning, and ethical AI — written for advanced undergraduates and practitioners alike.</p>
+          <div class="featured-actions">
+            <a class="btn-primary" href="book-detail.html?id=ml">View Details</a>
+            <button class="btn-outline" style="color:var(--navy);border-color:var(--navy);"
+              onclick="downloadBook('Principles of Machine Learning')">Download PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── New Arrivals ── -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title"><span>New Arrivals</span>Recently Added</div>
+        <a class="see-all-link" href="browse.html">See all books →</a>
+      </div>
+      <div class="books-grid" id="home-books-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── Multimedia ── -->
+  <section class="section" style="background: var(--navy); color: white;">
+    <div class="section-inner">
+      <div class="section-header" style="border-bottom-color: rgba(255,255,255,0.2);">
+        <div class="section-title" style="color:white;">
+          <span style="color:var(--gold);">Multimedia Resources</span>
+          More Than Just Books
+        </div>
+      </div>
+      <div class="media-grid">
+
+        <div class="media-card">
+          <div class="media-thumb" style="background:linear-gradient(135deg,#007a8a,#00264d);">🗺️</div>
+          <div class="media-body">
+            <div class="media-label">Image Gallery</div>
+            <div class="media-title">Scientific Diagrams &amp; Illustrations</div>
+            <div class="media-desc">High-resolution images and diagrams from our textbook collection.</div>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-thumb" style="background:linear-gradient(135deg,#c8472b,#8b2000);">▶️</div>
+          <div class="media-body">
+            <div class="media-label">Video Lectures</div>
+            <div class="media-title">Author Video Series</div>
+            <div class="media-desc">Watch authors explain key chapters and research findings directly.</div>
+            <video style="width:100%;border-radius:3px;margin-top:10px;" controls>
+              <source src="" type="video/mp4">
+              <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;">Sample video — upload your video file here.</p>
+            </video>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-thumb" style="background:linear-gradient(135deg,#5b3f8a,#2d1a5e);">🎧</div>
+          <div class="media-body">
+            <div class="media-label">Audio Books</div>
+            <div class="media-title">Listen While You Learn</div>
+            <div class="media-desc">Select titles available as high-quality audio recordings.</div>
+            <audio style="width:100%;margin-top:10px;" controls>
+              <source src="" type="audio/mpeg">
+              <p style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;">Sample audio — upload your audio file here.</p>
+            </audio>
+          </div>
+        </div>
+
+        <div class="media-card">
+          <div class="media-thumb" style="background:linear-gradient(135deg,#1a6b2f,#0a3315);">✨</div>
+          <div class="media-body">
+            <div class="media-label">Animations</div>
+            <div class="media-title">Interactive Learning Modules</div>
+            <div class="media-desc">Animated explainers for complex scientific and mathematical concepts.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-name">Scholarly<span>.</span></div>
+          <p>A premier destination for academic knowledge. We connect readers with the best scholarly content from leading authors and institutions worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Library</h5>
+          <a href="browse.html">Browse All Books</a>
+          <a href="browse.html">New Arrivals</a>
+          <a href="browse.html">Best Sellers</a>
+          <a href="browse.html">Open Access</a>
+        </div>
+        <div class="footer-col">
+          <h5>Support</h5>
+          <a href="#">FAQ</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Terms of Use</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="about.html">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Press</a>
+          <a href="reviews.html">Reviews</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Scholarly Online Library. All rights reserved.</span>
+        <span>Privacy Policy · Cookie Policy · Legal</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/shared.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

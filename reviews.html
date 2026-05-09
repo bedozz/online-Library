@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scholarly – Reviews</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/reviews.css">
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <div class="utility-bar">
+    <span>Scholarly Online Library — Access to Knowledge</span>
+    <div class="utility-bar-links">
+      <a href="#">Register</a>
+      <a href="#">Sign In</a>
+      <a href="#">Help</a>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <a class="nav-brand" href="index.html">
+      <div class="nav-logo-icon">S</div>
+      <div class="nav-brand-text">Scholarly<span>.</span></div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="browse.html">Browse</a>
+      <a class="nav-link" href="about.html">About Us</a>
+      <a class="nav-link active" href="reviews.html">Reviews</a>
+    </div>
+    <div class="nav-search">
+      <input type="text" id="searchInput" placeholder="Search books, authors, topics…" />
+      <button onclick="handleSearch()">Search</button>
+    </div>
+  </nav>
+  <div class="toast" id="toast"><span id="toastMsg">✓ Action completed</span></div>
+
+  <!-- ── Page Header ── -->
+  <section class="section" style="background:var(--off-white); padding-bottom:32px;">
+    <div class="section-inner">
+      <h1 style="font-family:var(--font-display);font-size:2rem;color:var(--navy);margin-bottom:8px;">Reader Reviews</h1>
+      <p style="font-family:var(--font-ui);color:var(--mid-gray);font-size:0.9rem;">Share your thoughts and read what others say about our collection.</p>
+    </div>
+  </section>
+
+  <!-- ── Reviews Layout ── -->
+  <section class="section">
+    <div class="section-inner reviews-layout">
+
+      <!-- Review List -->
+      <div id="reviews-list"></div>
+
+      <!-- Submit Form -->
+      <div class="review-form-panel">
+        <h3>Submit Your Review</h3>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="review-name" placeholder="e.g., Ahmed Hassan" />
+        </div>
+        <div class="form-group">
+          <label>Book Title</label>
+          <select id="review-book">
+            <option value="">Select a book…</option>
+            <option>Principles of Machine Learning</option>
+            <option>Introduction to Organic Chemistry</option>
+            <option>Modern History of the Middle East</option>
+            <option>Calculus: Theory and Applications</option>
+            <option>Behavioral Economics</option>
+            <option>Foundations of Civil Engineering</option>
+            <option>Clinical Psychology Handbook</option>
+            <option>Data Structures &amp; Algorithms</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Your Rating</label>
+          <div class="star-rating" id="starRating">
+            <span onclick="setRating(1)">★</span>
+            <span onclick="setRating(2)">★</span>
+            <span onclick="setRating(3)">★</span>
+            <span onclick="setRating(4)">★</span>
+            <span onclick="setRating(5)">★</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Your Review</label>
+          <textarea id="review-text" placeholder="Share your experience with this book…"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitReview()">Submit Review</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span>© 2026 Scholarly Online Library. All rights reserved.</span>
+        <span>Privacy Policy · Cookie Policy · Legal</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/shared.js"></script>
+  <script src="js/reviews.js"></script>
+</body>
+</html>

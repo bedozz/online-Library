@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scholarly – Browse Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/browse.css">
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <div class="utility-bar">
+    <span>Scholarly Online Library — Access to Knowledge</span>
+    <div class="utility-bar-links">
+      <a href="#">Register</a>
+      <a href="#">Sign In</a>
+      <a href="#">Help</a>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <a class="nav-brand" href="index.html">
+      <div class="nav-logo-icon">S</div>
+      <div class="nav-brand-text">Scholarly<span>.</span></div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link active" href="browse.html">Browse</a>
+      <a class="nav-link" href="about.html">About Us</a>
+      <a class="nav-link" href="reviews.html">Reviews</a>
+    </div>
+    <div class="nav-search">
+      <input type="text" id="searchInput" placeholder="Search books, authors, topics…" />
+      <button onclick="handleSearch()">Search</button>
+    </div>
+  </nav>
+  <div class="toast" id="toast"><span id="toastMsg">✓ Action completed</span></div>
+
+  <!-- ── Page Header ── -->
+  <section class="section" style="background:var(--off-white); padding-bottom:32px;">
+    <div class="section-inner">
+      <h1 style="font-family:var(--font-display);font-size:2rem;color:var(--navy);margin-bottom:8px;">Browse the Library</h1>
+      <p style="font-family:var(--font-ui);color:var(--mid-gray);font-size:0.9rem;">Choose a subject category to explore our curated collection of books.</p>
+    </div>
+  </section>
+
+  <!-- ── Categories ── -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title"><span>All Subjects</span>Browse by Category</div>
+      </div>
+      <div class="categories-grid">
+        <div class="category-card" data-category="Computer Science">
+          <div class="category-icon" style="background:#e0f2f5;">💻</div>
+          <div class="category-info">
+            <h3>Computer Science</h3>
+            <p>AI, algorithms, programming, data science</p>
+            <div class="category-count">8,240 Books</div>
+          </div>
+        </div>
+        <div class="category-card" data-category="Medicine &amp; Health">
+          <div class="category-icon" style="background:#fce8e8;">🏥</div>
+          <div class="category-info">
+            <h3>Medicine &amp; Health</h3>
+            <p>Clinical sciences, pharmacology, public health</p>
+            <div class="category-count">6,100 Books</div>
+          </div>
+        </div>
+        <div class="category-card" data-category="Engineering">
+          <div class="category-icon" style="background:#fff4e0;">⚙️</div>
+          <div class="category-info">
+            <h3>Engineering</h3>
+            <p>Electrical, civil, mechanical, chemical</p>
+            <div class="category-count">7,800 Books</div>
+          </div>
+        </div>
+        <div class="category-card" data-category="Mathematics">
+          <div class="category-icon" style="background:#f0e8ff;">📐</div>
+          <div class="category-info">
+            <h3>Mathematics</h3>
+            <p>Pure &amp; applied math, statistics, logic</p>
+            <div class="category-count">4,500 Books</div>
+          </div>
+        </div>
+        <div class="category-card" data-category="Natural Sciences">
+          <div class="category-icon" style="background:#e8f5e9;">🌿</div>
+          <div class="category-info">
+            <h3>Natural Sciences</h3>
+            <p>Physics, chemistry, biology, ecology</p>
+            <div class="category-count">9,200 Books</div>
+          </div>
+        </div>
+        <div class="category-card" data-category="Humanities">
+          <div class="category-icon" style="background:#fff0e0;">📜</div>
+          <div class="category-info">
+            <h3>Humanities</h3>
+            <p>History, philosophy, linguistics, arts</p>
+            <div class="category-count">5,300 Books</div>
+          </div>
+        </div>
+        <div class="category-card" data-category="Business">
+          <div class="category-icon" style="background:#e8f0ff;">📊</div>
+          <div class="category-info">
+            <h3>Business &amp; Economics</h3>
+            <p>Finance, management, marketing, strategy</p>
+            <div class="category-count">6,800 Books</div>
+          </div>
+        </div>
+        <div class="category-card" data-category="Social Sciences">
+          <div class="category-icon" style="background:#fde8f5;">🤝</div>
+          <div class="category-info">
+            <h3>Social Sciences</h3>
+            <p>Sociology, psychology, political science</p>
+            <div class="category-count">4,100 Books</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Book Results ── -->
+  <section class="section" style="background:var(--off-white);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title" id="category-heading"><span>Showing</span>All Books</div>
+      </div>
+      <div class="books-grid" id="menu-books-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span>© 2026 Scholarly Online Library. All rights reserved.</span>
+        <span>Privacy Policy · Cookie Policy · Legal</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/shared.js"></script>
+  <script src="js/browse.js"></script>
+</body>
+</html>

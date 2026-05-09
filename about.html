@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scholarly – About Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <div class="utility-bar">
+    <span>Scholarly Online Library — Access to Knowledge</span>
+    <div class="utility-bar-links">
+      <a href="#">Register</a>
+      <a href="#">Sign In</a>
+      <a href="#">Help</a>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <a class="nav-brand" href="index.html">
+      <div class="nav-logo-icon">S</div>
+      <div class="nav-brand-text">Scholarly<span>.</span></div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="browse.html">Browse</a>
+      <a class="nav-link active" href="about.html">About Us</a>
+      <a class="nav-link" href="reviews.html">Reviews</a>
+    </div>
+    <div class="nav-search">
+      <input type="text" id="searchInput" placeholder="Search books, authors, topics…" />
+      <button onclick="handleSearch()">Search</button>
+    </div>
+  </nav>
+  <div class="toast" id="toast"><span id="toastMsg">✓ Action completed</span></div>
+
+  <!-- ── About Hero ── -->
+  <section class="about-hero">
+    <div class="about-hero-inner">
+      <div>
+        <div class="about-eyebrow">About Scholarly</div>
+        <h1>Connecting Readers<br/>to Knowledge Since 1998</h1>
+        <p>Scholarly is an independent academic publishing and library platform dedicated to making peer-reviewed books accessible to students, researchers, and lifelong learners worldwide.</p>
+        <p>We partner with over 200 universities and research institutions, maintaining a growing collection of more than 48,000 titles across all major disciplines.</p>
+      </div>
+      <div class="branches-grid">
+        <div class="branch-card">
+          <h4>📍 Main Campus Branch</h4>
+          <p>45 University Boulevard, Cairo<br/>+20 2 2345 6789<br/>Mon–Fri: 8am – 9pm</p>
+        </div>
+        <div class="branch-card">
+          <h4>📍 Downtown Branch</h4>
+          <p>12 Tahrir Square, Cairo<br/>+20 2 2987 6543<br/>Mon–Sat: 9am – 8pm</p>
+        </div>
+        <div class="branch-card">
+          <h4>📍 Alexandria Branch</h4>
+          <p>7 Corniche Road, Alexandria<br/>+20 3 4567 8901<br/>Mon–Fri: 9am – 7pm</p>
+        </div>
+        <div class="branch-card">
+          <h4>📍 Giza Branch</h4>
+          <p>88 Pyramids Road, Giza<br/>+20 2 3765 4321<br/>Daily: 10am – 8pm</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Mission ── -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title"><span>Our Mission</span>What Drives Us</div>
+      </div>
+      <div class="mission-grid">
+        <div class="mission-card" style="border-top-color:var(--navy);">
+          <div class="mission-icon">📚</div>
+          <h3>Open Access</h3>
+          <p>We believe knowledge should be free. Over 30% of our collection is fully open-access — available to anyone, anywhere, with no subscription required.</p>
+        </div>
+        <div class="mission-card" style="border-top-color:var(--teal);">
+          <div class="mission-icon">🔬</div>
+          <h3>Peer-Reviewed Quality</h3>
+          <p>Every title in our collection undergoes a rigorous editorial review process. We maintain the highest standards for accuracy and scholarly integrity.</p>
+        </div>
+        <div class="mission-card" style="border-top-color:var(--accent);">
+          <div class="mission-icon">🌍</div>
+          <h3>Global Community</h3>
+          <p>Our readers span 190 countries. We support multilingual content and are committed to diversifying the voices represented in our collection.</p>
+        </div>
+      </div>
+
+      <!-- ── Contact ── -->
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <h4>Phone</h4>
+          <p>+20 2 2345 6789<br/>+20 2 2345 6790<br/>Mon–Fri, 9am–6pm</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <h4>Email</h4>
+          <p>info@scholarly.eg<br/>support@scholarly.eg<br/>Response within 24h</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">🗺️</div>
+          <h4>Head Office</h4>
+          <p>45 University Boulevard<br/>Cairo, Egypt 11511<br/>Open to visitors daily</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span>© 2026 Scholarly Online Library. All rights reserved.</span>
+        <span>Privacy Policy · Cookie Policy · Legal</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/shared.js"></script>
+</body>
+</html>
