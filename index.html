@@ -7,12 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    /* =========================================
-       CSS VARIABLES – Global Design Tokens
-       =========================================
-       These define the site's color palette,
-       fonts, and spacing used everywhere.
-    */
+    
     :root {
       --navy:   #003865;
       --navy-dark: #00264d;
@@ -36,9 +31,7 @@
       --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
     }
 
-    /* =========================================
-       RESET & BASE STYLES
-    */
+    
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -51,17 +44,11 @@
     img { max-width: 100%; display: block; }
     ul { list-style: none; }
 
-    /* =========================================
-       PAGE VISIBILITY SYSTEM
-       Only the active "page" div is shown.
-       JavaScript toggles the .active class.
-    */
+    
     .page { display: none; }
     .page.active { display: block; }
 
-    /* =========================================
-       TOP UTILITY BAR (above main nav)
-    */
+    
     .utility-bar {
       background: var(--navy-dark);
       color: rgba(255,255,255,0.7);
@@ -77,9 +64,7 @@
     .utility-bar a:hover { color: var(--white); }
     .utility-bar-links { display: flex; gap: 20px; }
 
-    /* =========================================
-       MAIN NAVIGATION
-    */
+    
     .main-nav {
       background: var(--navy);
       padding: 0 40px;
@@ -92,7 +77,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
 
-    /* Logo / Brand */
+    
     .nav-brand {
       display: flex;
       align-items: center;
@@ -119,7 +104,7 @@
     }
     .nav-brand-text span { color: var(--gold); }
 
-    /* Nav links */
+    
     .nav-links {
       display: flex;
       align-items: stretch;
@@ -146,7 +131,7 @@
       background: rgba(255,255,255,0.05);
     }
 
-    /* Search bar in nav */
+    
     .nav-search {
       display: flex;
       align-items: center;
@@ -186,16 +171,14 @@
     }
     .nav-search button:hover { background: #006070; }
 
-    /* =========================================
-       HERO SECTION (Home page)
-    */
+    
     .hero {
       background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--teal) 100%);
       padding: 72px 40px 80px;
       position: relative;
       overflow: hidden;
     }
-    /* Decorative background pattern */
+    
     .hero::before {
       content: '';
       position: absolute;
@@ -278,9 +261,7 @@
     }
     .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
 
-    /* =========================================
-       STATS BAR below hero
-    */
+    
     .stats-bar {
       background: var(--off-white);
       border-bottom: 1px solid var(--light-gray);
@@ -316,9 +297,7 @@
       margin-top: 4px;
     }
 
-    /* =========================================
-       SECTION CONTAINERS (shared layout)
-    */
+    
     .section {
       padding: 56px 40px;
     }
@@ -362,9 +341,7 @@
     }
     .see-all-link:hover { color: var(--navy); border-color: var(--navy); }
 
-    /* =========================================
-       BOOK CARDS GRID
-    */
+    
     .books-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -390,7 +367,7 @@
       position: relative;
       overflow: hidden;
     }
-    /* Each cover has a unique color via inline style */
+    
     .book-cover-title {
       font-family: var(--font-display);
       font-size: 1rem;
@@ -453,9 +430,7 @@
     }
     .book-download-btn:hover { background: var(--navy); color: white; }
 
-    /* =========================================
-       FEATURED BOOK (large horizontal card)
-    */
+    
     .featured-book {
       display: grid;
       grid-template-columns: 220px 1fr;
@@ -519,9 +494,7 @@
     }
     .featured-actions { display: flex; gap: 10px; }
 
-    /* =========================================
-       CATEGORY GRID (Menu page)
-    */
+    
     .categories-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -571,9 +544,7 @@
       letter-spacing: 0.04em;
     }
 
-    /* =========================================
-       ABOUT US PAGE
-    */
+    
     .about-hero {
       background: var(--off-white);
       border-bottom: 1px solid var(--light-gray);
@@ -654,9 +625,7 @@
       line-height: 1.5;
     }
 
-    /* =========================================
-       REVIEW PAGE
-    */
+    
     .reviews-layout {
       display: grid;
       grid-template-columns: 1fr 380px;
@@ -703,7 +672,7 @@
       margin-top: 12px;
     }
 
-    /* Review form */
+    
     .review-form-panel {
       background: var(--off-white);
       border: 1px solid var(--light-gray);
@@ -750,7 +719,7 @@
     .form-group textarea:focus { border-color: var(--teal); }
     .form-group textarea { resize: vertical; min-height: 100px; }
 
-    /* Star rating input */
+    
     .star-rating { display: flex; gap: 6px; }
     .star-rating span {
       font-size: 1.5rem;
@@ -779,9 +748,7 @@
     }
     .submit-btn:hover { background: var(--teal); }
 
-    /* =========================================
-       BOOK DETAIL VIEW (shown when a book is clicked)
-    */
+    
     .book-detail-header {
       background: var(--navy);
       padding: 40px 40px;
@@ -900,9 +867,7 @@
     }
     .download-full-btn:hover { background: #a83520; }
 
-    /* =========================================
-       BACK BUTTON
-    */
+    
     .back-btn {
       background: none;
       border: none;
@@ -919,9 +884,7 @@
     }
     .back-btn:hover { color: var(--navy); }
 
-    /* =========================================
-       FOOTER
-    */
+    
     footer {
       background: var(--navy-dark);
       color: rgba(255,255,255,0.65);
@@ -981,9 +944,7 @@
       font-size: 0.72rem;
     }
 
-    /* =========================================
-       NOTIFICATION TOAST
-    */
+    
     .toast {
       position: fixed;
       bottom: 30px;
@@ -1007,9 +968,7 @@
       to   { transform: translateX(0); opacity: 1; }
     }
 
-    /* =========================================
-       RESPONSIVE (basic)
-    */
+    
     @media (max-width: 768px) {
       .main-nav { flex-wrap: wrap; padding: 0 16px; }
       .hero, .section, .about-hero { padding-left: 16px; padding-right: 16px; }
@@ -1027,10 +986,6 @@
 </head>
 <body>
 
-<!-- =============================================
-     UTILITY BAR
-     A small strip at the very top with links
-============================================= -->
 <div class="utility-bar">
   <span>Scholarly Online Library — Access to Knowledge</span>
   <div class="utility-bar-links">
@@ -1040,10 +995,6 @@
   </div>
 </div>
 
-<!-- =============================================
-     MAIN NAVIGATION
-     The sticky top bar with logo + links + search
-============================================= -->
 <nav class="main-nav">
   <div class="nav-brand" onclick="showPage('home')">
     <div class="nav-logo-icon">S</div>
@@ -1061,19 +1012,13 @@
   </div>
 </nav>
 
-<!-- =============================================
-     TOAST NOTIFICATION
-============================================= -->
 <div class="toast" id="toast">
   <span id="toastMsg">✓ Action completed</span>
 </div>
 
-<!-- =============================================
-     PAGE: HOME
-============================================= -->
 <div class="page active" id="page-home">
 
-  <!-- Hero Banner -->
+  
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-eyebrow">The World's Knowledge — At Your Fingertips</div>
@@ -1086,7 +1031,7 @@
     </div>
   </section>
 
-  <!-- Stats Bar -->
+  
   <div class="stats-bar">
     <div class="stats-inner">
       <div class="stat-item">
@@ -1108,7 +1053,7 @@
     </div>
   </div>
 
-  <!-- Featured Book -->
+  
   <section class="section" style="background: var(--off-white);">
     <div class="section-inner">
       <div class="section-header">
@@ -1135,7 +1080,7 @@
     </div>
   </section>
 
-  <!-- Recently Added Books -->
+  
   <section class="section">
     <div class="section-inner">
       <div class="section-header">
@@ -1149,7 +1094,7 @@
     </div>
   </section>
 
-  <!-- Multimedia Section -->
+  
   <section class="section" style="background: var(--navy); color: white;">
     <div class="section-inner">
       <div class="section-header" style="border-bottom-color: rgba(255,255,255,0.2);">
@@ -1160,7 +1105,7 @@
       </div>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
 
-        <!-- Image resource -->
+        
         <div style="background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
           <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #007a8a, #00264d); display: flex; align-items: center; justify-content: center; font-size: 3rem;">🗺️</div>
           <div style="padding: 18px;">
@@ -1170,7 +1115,7 @@
           </div>
         </div>
 
-        <!-- Video resource -->
+        
         <div style="background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
           <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #c8472b, #8b2000); display: flex; align-items: center; justify-content: center; font-size: 3rem;">▶️</div>
           <div style="padding: 18px;">
@@ -1184,7 +1129,7 @@
           </div>
         </div>
 
-        <!-- Audio resource -->
+        
         <div style="background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
           <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #5b3f8a, #2d1a5e); display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎧</div>
           <div style="padding: 18px;">
@@ -1198,7 +1143,7 @@
           </div>
         </div>
 
-        <!-- Animation resource -->
+        
         <div style="background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
           <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #1a6b2f, #0a3315); display: flex; align-items: center; justify-content: center; font-size: 3rem;">✨</div>
           <div style="padding: 18px;">
@@ -1247,11 +1192,8 @@
       </div>
     </div>
   </footer>
-</div><!-- end page-home -->
+</div>
 
-<!-- =============================================
-     PAGE: MENU (Browse by Category)
-============================================= -->
 <div class="page" id="page-menu">
   <section class="section" style="background: var(--off-white); padding-bottom: 32px;">
     <div class="section-inner">
@@ -1260,7 +1202,7 @@
     </div>
   </section>
 
-  <!-- Category filter tabs -->
+  
   <section class="section">
     <div class="section-inner">
       <div class="section-header">
@@ -1335,7 +1277,7 @@
     </div>
   </section>
 
-  <!-- Books in selected category -->
+  
   <section class="section" style="background: var(--off-white);">
     <div class="section-inner">
       <div class="section-header">
@@ -1352,11 +1294,8 @@
       </div>
     </div>
   </footer>
-</div><!-- end page-menu -->
+</div>
 
-<!-- =============================================
-     PAGE: ABOUT US
-============================================= -->
 <div class="page" id="page-about">
   <section class="about-hero">
     <div class="about-hero-inner">
@@ -1387,7 +1326,7 @@
     </div>
   </section>
 
-  <!-- Mission section -->
+  
   <section class="section">
     <div class="section-inner">
       <div class="section-header">
@@ -1411,7 +1350,7 @@
         </div>
       </div>
 
-      <!-- Contact cards -->
+      
       <div class="contact-grid">
         <div class="contact-card">
           <div class="contact-icon">📞</div>
@@ -1439,11 +1378,8 @@
       </div>
     </div>
   </footer>
-</div><!-- end page-about -->
+</div>
 
-<!-- =============================================
-     PAGE: REVIEWS
-============================================= -->
 <div class="page" id="page-review">
   <section class="section" style="background: var(--off-white); padding-bottom: 32px;">
     <div class="section-inner">
@@ -1455,12 +1391,12 @@
   <section class="section">
     <div class="section-inner reviews-layout">
 
-      <!-- Left: List of reviews -->
+      
       <div id="reviews-list">
-        <!-- Reviews injected by JS -->
+        
       </div>
 
-      <!-- Right: Submit review form -->
+      
       <div class="review-form-panel">
         <h3>Submit Your Review</h3>
         <div class="form-group">
@@ -1507,27 +1443,16 @@
       </div>
     </div>
   </footer>
-</div><!-- end page-review -->
+</div>
 
-<!-- =============================================
-     PAGE: BOOK DETAIL VIEW
-============================================= -->
 <div class="page" id="page-book-detail">
   <button class="back-btn" onclick="goBack()">← Back</button>
   <div id="book-detail-content">
-    <!-- Injected by JS -->
+    
   </div>
 </div>
 
-<!-- =============================================
-     JAVASCRIPT
-     All page logic, data, and interactions
-============================================= -->
 <script>
-  // =============================================
-  // DATA: Our library's book collection
-  // Each book object holds all the info we display
-  // =============================================
   const books = [
     {
       id: 'ml',
@@ -1627,15 +1552,11 @@
     }
   ];
 
-  // =============================================
-  // STATE: track current page and selected category
-  // =============================================
   let currentPage    = 'home';
   let previousPage   = 'home';
   let currentRating  = 0;
   let currentCategory = 'All';
 
-  // Seed reviews
   let reviews = [
     { name: 'Fatima H.', book: 'Principles of Machine Learning', rating: 5, text: 'Absolutely brilliant textbook. The progression from theory to application is seamless, and the Python examples are genuinely useful for real projects.', date: 'April 28, 2026' },
     { name: 'Mohamed A.', book: 'Data Structures & Algorithms', rating: 5, text: 'Best DSA book I have come across. Youssef Ibrahim explains complex concepts with unusual simplicity. My whole study group uses this.', date: 'April 15, 2026' },
@@ -1643,55 +1564,33 @@
     { name: 'Omar R.', book: 'Modern History of the Middle East', rating: 5, text: 'Rare to find a history book this balanced and well-sourced. The use of primary Arabic sources makes it stand apart from Western-centric accounts.', date: 'March 12, 2026' },
   ];
 
-  // =============================================
-  // FUNCTION: showPage(id)
-  // Hides all pages and shows the target one.
-  // Also updates the nav link highlights.
-  // =============================================
   function showPage(id) {
     previousPage = currentPage;
     currentPage  = id;
 
-    // Hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    // Show target
     document.getElementById('page-' + id).classList.add('active');
 
-    // Update nav active state
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     const navEl = document.getElementById('nav-' + id);
     if (navEl) navEl.classList.add('active');
 
-    // Scroll to top on page change
     window.scrollTo(0, 0);
 
-    // Initialize page-specific content
     if (id === 'home')   renderHomeBooks();
     if (id === 'menu')   renderMenuBooks();
     if (id === 'review') renderReviews();
   }
 
-  // =============================================
-  // FUNCTION: goBack()
-  // Returns from book detail to previous page
-  // =============================================
   function goBack() {
     showPage(previousPage);
   }
 
-  // =============================================
-  // FUNCTION: renderHomeBooks()
-  // Fills the homepage "Recently Added" grid
-  // =============================================
   function renderHomeBooks() {
     const grid = document.getElementById('home-books-grid');
     grid.innerHTML = books.slice(0, 6).map(b => bookCardHTML(b)).join('');
   }
 
-  // =============================================
-  // FUNCTION: renderMenuBooks(category)
-  // Fills the menu page book grid, optionally filtered
-  // =============================================
   function renderMenuBooks(category) {
     const filtered = category
       ? books.filter(b => b.category === category)
@@ -1704,11 +1603,6 @@
     grid.innerHTML = filtered.map(b => bookCardHTML(b)).join('');
   }
 
-  // =============================================
-  // FUNCTION: bookCardHTML(book)
-  // Returns HTML string for one book card.
-  // Used in both Home and Menu grids.
-  // =============================================
   function bookCardHTML(b) {
     return `
       <div class="book-card" onclick="showBookDetail('${b.id}')">
@@ -1726,22 +1620,13 @@
       </div>`;
   }
 
-  // =============================================
-  // FUNCTION: showCategory(name)
-  // Filters the menu books by category
-  // =============================================
   function showCategory(name) {
     currentCategory = name;
     renderMenuBooks(name);
-    // Smooth scroll down to the books grid
     document.getElementById('menu-books-grid')
       .scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // =============================================
-  // FUNCTION: showBookDetail(id)
-  // Renders the full book detail view
-  // =============================================
   function showBookDetail(id) {
     const b = books.find(bk => bk.id === id);
     if (!b) return;
@@ -1792,18 +1677,33 @@
     window.scrollTo(0, 0);
   }
 
-  // =============================================
-  // FUNCTION: downloadBook(title)
-  // Simulates a book download with a toast notification
-  // =============================================
+  const bookPDFs = {
+    'Principles of Machine Learning':      'https://assets.openstax.org/oscms-prodcms/media/documents/IntroductoryBusinessStatistics-OP.pdf',
+    'Introduction to Organic Chemistry':   'https://assets.openstax.org/oscms-prodcms/media/documents/OrganicChemistry-OP.pdf',
+    'Modern History of the Middle East':   'https://assets.openstax.org/oscms-prodcms/media/documents/WorldHistoryVolume2-OP.pdf',
+    'Calculus: Theory and Applications':   'https://assets.openstax.org/oscms-prodcms/media/documents/CalculusVolume1-OP.pdf',
+    'Behavioral Economics':                'https://assets.openstax.org/oscms-prodcms/media/documents/PrinciplesofMacroeconomics3e-OP.pdf',
+    'Foundations of Civil Engineering':    'https://assets.openstax.org/oscms-prodcms/media/documents/UniversityPhysicsVolume1-OP.pdf',
+    'Clinical Psychology Handbook':        'https://assets.openstax.org/oscms-prodcms/media/documents/Psychology2e-OP.pdf',
+    'Data Structures & Algorithms':        'https://assets.openstax.org/oscms-prodcms/media/documents/CalculusVolume3-OP.pdf'
+  };
+
   function downloadBook(title) {
-    showToast('⬇ Downloading "' + title + '" …');
+    const url = bookPDFs[title];
+    if (url) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = title.replace(/[^a-z0-9]/gi, '_') + '.pdf';
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('⬇ Downloading "' + title + '" …');
+    } else {
+      showToast('⚠ PDF not available for this title.');
+    }
   }
 
-  // =============================================
-  // FUNCTION: showToast(msg)
-  // Shows a temporary notification at bottom-right
-  // =============================================
   function showToast(msg) {
     const toast = document.getElementById('toast');
     document.getElementById('toastMsg').textContent = msg;
@@ -1811,11 +1711,6 @@
     setTimeout(() => toast.classList.remove('show'), 3500);
   }
 
-  // =============================================
-  // FUNCTION: handleSearch()
-  // Simple search: filters books by title or author
-  // and navigates to the menu page with results
-  // =============================================
   function handleSearch() {
     const query = document.getElementById('searchInput').value.toLowerCase().trim();
     if (!query) return;
@@ -1839,15 +1734,10 @@
     }
   }
 
-  // Allow pressing Enter in the search box
   document.getElementById('searchInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') handleSearch();
   });
 
-  // =============================================
-  // FUNCTION: renderReviews()
-  // Fills the reviews list on the review page
-  // =============================================
   function renderReviews() {
     const list = document.getElementById('reviews-list');
     list.innerHTML = reviews.map(r => `
@@ -1864,10 +1754,6 @@
       </div>`).join('');
   }
 
-  // =============================================
-  // FUNCTION: setRating(n)
-  // Highlights the star rating the user selects
-  // =============================================
   function setRating(n) {
     currentRating = n;
     document.querySelectorAll('#starRating span').forEach((s, i) => {
@@ -1875,22 +1761,16 @@
     });
   }
 
-  // =============================================
-  // FUNCTION: submitReview()
-  // Validates the form and adds the review to the list
-  // =============================================
   function submitReview() {
     const name = document.getElementById('review-name').value.trim();
     const book = document.getElementById('review-book').value;
     const text = document.getElementById('review-text').value.trim();
 
-    // Basic validation
     if (!name || !book || !text || currentRating === 0) {
       showToast('⚠ Please fill in all fields and select a rating.');
       return;
     }
 
-    // Add new review to the top of the array
     reviews.unshift({
       name,
       book,
@@ -1899,10 +1779,8 @@
       date: new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })
     });
 
-    // Re-render the list
     renderReviews();
 
-    // Reset the form
     document.getElementById('review-name').value = '';
     document.getElementById('review-book').value = '';
     document.getElementById('review-text').value = '';
@@ -1911,9 +1789,6 @@
     showToast('✓ Your review was submitted successfully!');
   }
 
-  // =============================================
-  // INITIALIZE: Run on page load
-  // =============================================
   renderHomeBooks();
   renderReviews();
 </script>
