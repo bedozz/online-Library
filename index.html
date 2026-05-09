@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scholarly – Online Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================
+       CSS VARIABLES – Global Design Tokens
+       =========================================
+       These define the site's color palette,
+       fonts, and spacing used everywhere.
+    */
+    :root {
+      --navy:   #003865;
+      --navy-dark: #00264d;
+      --teal:   #007a8a;
+      --teal-light: #e0f2f5;
+      --accent: #c8472b;
+      --gold:   #e8a217;
+      --white:  #ffffff;
+      --off-white: #f7f6f2;
+      --light-gray: #eceae4;
+      --mid-gray: #b0aba0;
+      --dark-gray: #3a3530;
+      --text:   #1e1c18;
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Source Serif 4', Georgia, serif;
+      --font-ui:      'DM Sans', Helvetica, sans-serif;
+
+      --radius: 3px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.10);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
+    }
+
+    /* =========================================
+       RESET & BASE STYLES
+    */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+
+    /* =========================================
+       PAGE VISIBILITY SYSTEM
+       Only the active "page" div is shown.
+       JavaScript toggles the .active class.
+    */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* =========================================
+       TOP UTILITY BAR (above main nav)
+    */
+    .utility-bar {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      padding: 6px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .utility-bar a { color: rgba(255,255,255,0.75); transition: color 0.2s; }
+    .utility-bar a:hover { color: var(--white); }
+    .utility-bar-links { display: flex; gap: 20px; }
+
+    /* =========================================
+       MAIN NAVIGATION
+    */
+    .main-nav {
+      background: var(--navy);
+      padding: 0 40px;
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    /* Logo / Brand */
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px 14px 0;
+      border-right: 1px solid rgba(255,255,255,0.12);
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .nav-logo-icon {
+      width: 36px; height: 36px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      color: white; font-size: 1.1rem; font-weight: 700;
+    }
+    .nav-brand-text {
+      font-family: var(--font-display);
+      color: var(--white);
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .nav-brand-text span { color: var(--gold); }
+
+    /* Nav links */
+    .nav-links {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      flex: 1;
+    }
+    .nav-link {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--white);
+      border-bottom-color: var(--gold);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* Search bar in nav */
+    .nav-search {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      padding: 10px 0;
+      gap: 6px;
+    }
+    .nav-search input {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2px;
+      color: white;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      padding: 6px 12px;
+      width: 220px;
+      outline: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-search input::placeholder { color: rgba(255,255,255,0.45); }
+    .nav-search input:focus {
+      background: rgba(255,255,255,0.18);
+      border-color: var(--teal);
+    }
+    .nav-search button {
+      background: var(--teal);
+      border: none;
+      color: white;
+      padding: 7px 14px;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 2px;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+    }
+    .nav-search button:hover { background: #006070; }
+
+    /* =========================================
+       HERO SECTION (Home page)
+    */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--teal) 100%);
+      padding: 72px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Decorative background pattern */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: 30%;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(200,71,43,0.08);
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.18;
+      max-width: 680px;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 540px;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s;
+      text-transform: uppercase;
+    }
+    .btn-primary:hover { background: #a83520; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 11px 28px;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      border-radius: 2px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, background 0.2s;
+      text-transform: uppercase;
+    }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+
+    /* =========================================
+       STATS BAR below hero
+    */
+    .stats-bar {
+      background: var(--off-white);
+      border-bottom: 1px solid var(--light-gray);
+      padding: 20px 40px;
+    }
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 24px;
+      border-right: 1px solid var(--light-gray);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-top: 4px;
+    }
+
+    /* =========================================
+       SECTION CONTAINERS (shared layout)
+    */
+    .section {
+      padding: 56px 40px;
+    }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--navy);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .section-title span {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .see-all-link {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: var(--teal);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--teal);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .see-all-link:hover { color: var(--navy); border-color: var(--navy); }
+
+    /* =========================================
+       BOOK CARDS GRID
+    */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 28px;
+    }
+    .book-card {
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.2s;
+      cursor: pointer;
+    }
+    .book-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    .book-cover {
+      height: 200px;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Each cover has a unique color via inline style */
+    .book-cover-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    .book-cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
+    }
+    .book-info { padding: 14px 16px 16px; }
+    .book-author {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--teal);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .book-title {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+    .book-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .book-badge {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--teal-light);
+      color: var(--teal);
+      padding: 3px 8px;
+      border-radius: 2px;
+      font-weight: 500;
+    }
+    .book-download-btn {
+      background: none;
+      border: 1px solid var(--navy);
+      color: var(--navy);
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .book-download-btn:hover { background: var(--navy); color: white; }
+
+    /* =========================================
+       FEATURED BOOK (large horizontal card)
+    */
+    .featured-book {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-left: 5px solid var(--navy);
+      box-shadow: var(--shadow);
+      margin-bottom: 40px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .featured-cover {
+      height: 260px;
+      background: linear-gradient(135deg, #005f8a, #003865);
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+    .featured-cover-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: white;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .featured-body {
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-label {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .featured-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+    .featured-author {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      color: var(--teal);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+    .featured-desc {
+      font-size: 0.9rem;
+      color: var(--dark-gray);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .featured-actions { display: flex; gap: 10px; }
+
+    /* =========================================
+       CATEGORY GRID (Menu page)
+    */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .category-card {
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      padding: 28px 24px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .category-card:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--teal);
+      transform: translateY(-2px);
+    }
+    .category-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .category-info h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .category-info p {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--mid-gray);
+    }
+    .category-count {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      color: var(--teal);
+      font-weight: 600;
+      margin-top: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    /* =========================================
+       ABOUT US PAGE
+    */
+    .about-hero {
+      background: var(--off-white);
+      border-bottom: 1px solid var(--light-gray);
+      padding: 56px 40px;
+    }
+    .about-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-hero h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .about-hero p {
+      font-size: 1rem;
+      color: var(--dark-gray);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .branches-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .branch-card {
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      padding: 20px;
+      border-radius: var(--radius);
+      border-top: 3px solid var(--teal);
+    }
+    .branch-card h4 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .branch-card p {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--mid-gray);
+      line-height: 1.5;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .contact-card {
+      background: var(--navy);
+      color: white;
+      padding: 28px 24px;
+      border-radius: var(--radius);
+      text-align: center;
+    }
+    .contact-card .contact-icon { font-size: 2rem; margin-bottom: 12px; }
+    .contact-card h4 {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .contact-card p {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+    }
+
+    /* =========================================
+       REVIEW PAGE
+    */
+    .reviews-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 40px;
+      align-items: start;
+    }
+    .review-card {
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      padding: 24px 28px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      border-left: 4px solid var(--teal);
+    }
+    .review-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .reviewer-name {
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--navy);
+    }
+    .review-book {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--teal);
+      margin-top: 2px;
+    }
+    .stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 2px; }
+    .review-text {
+      font-size: 0.9rem;
+      color: var(--dark-gray);
+      line-height: 1.65;
+      font-style: italic;
+    }
+    .review-date {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      color: var(--mid-gray);
+      margin-top: 12px;
+    }
+
+    /* Review form */
+    .review-form-panel {
+      background: var(--off-white);
+      border: 1px solid var(--light-gray);
+      padding: 32px 28px;
+      border-radius: var(--radius);
+      position: sticky;
+      top: 80px;
+    }
+    .review-form-panel h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--navy);
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--dark-gray);
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      border: 1.5px solid var(--light-gray);
+      border-radius: var(--radius);
+      padding: 9px 12px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--teal); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    /* Star rating input */
+    .star-rating { display: flex; gap: 6px; }
+    .star-rating span {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--light-gray);
+      transition: color 0.15s;
+    }
+    .star-rating span.active,
+    .star-rating span:hover { color: var(--gold); }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--navy);
+      color: white;
+      border: none;
+      padding: 12px;
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 6px;
+    }
+    .submit-btn:hover { background: var(--teal); }
+
+    /* =========================================
+       BOOK DETAIL VIEW (shown when a book is clicked)
+    */
+    .book-detail-header {
+      background: var(--navy);
+      padding: 40px 40px;
+      display: flex;
+      gap: 40px;
+      align-items: flex-end;
+    }
+    .book-detail-cover {
+      width: 160px;
+      height: 220px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      box-shadow: var(--shadow-lg);
+    }
+    .book-detail-cover-title {
+      font-family: var(--font-display);
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .book-detail-meta { color: white; }
+    .book-detail-meta h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .book-detail-meta .author {
+      font-family: var(--font-ui);
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+    .book-detail-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      padding: 4px 12px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      color: rgba(255,255,255,0.8);
+    }
+    .book-detail-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 40px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 48px;
+    }
+    .book-detail-desc h2 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--navy);
+      margin-bottom: 14px;
+    }
+    .book-detail-desc p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--dark-gray);
+      margin-bottom: 16px;
+    }
+    .book-detail-sidebar-card {
+      background: var(--off-white);
+      border: 1px solid var(--light-gray);
+      padding: 24px;
+      border-radius: var(--radius);
+    }
+    .book-detail-sidebar-card h4 {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-bottom: 16px;
+    }
+    .detail-meta-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--light-gray);
+      font-size: 0.85rem;
+    }
+    .detail-meta-row:last-child { border-bottom: none; }
+    .detail-meta-row .label {
+      font-family: var(--font-ui);
+      color: var(--mid-gray);
+      font-size: 0.78rem;
+    }
+    .detail-meta-row .value {
+      font-weight: 600;
+      color: var(--text);
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+    }
+    .download-full-btn {
+      width: 100%;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 13px;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      cursor: pointer;
+      margin-top: 18px;
+      transition: background 0.2s;
+    }
+    .download-full-btn:hover { background: #a83520; }
+
+    /* =========================================
+       BACK BUTTON
+    */
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--teal);
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      cursor: pointer;
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--navy); }
+
+    /* =========================================
+       FOOTER
+    */
+    footer {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,0.65);
+      padding: 48px 40px 28px;
+      margin-top: 40px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 36px;
+    }
+    .footer-brand { }
+    .footer-brand .brand-name {
+      font-family: var(--font-display);
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .footer-brand .brand-name span { color: var(--gold); }
+    .footer-brand p {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+    .footer-col h5 {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: white;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: white; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+    }
+
+    /* =========================================
+       NOTIFICATION TOAST
+    */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--navy);
+      color: white;
+      padding: 14px 24px;
+      border-radius: var(--radius);
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+    }
+    .toast.show { display: flex; }
+    @keyframes slideIn {
+      from { transform: translateX(60px); opacity: 0; }
+      to   { transform: translateX(0); opacity: 1; }
+    }
+
+    /* =========================================
+       RESPONSIVE (basic)
+    */
+    @media (max-width: 768px) {
+      .main-nav { flex-wrap: wrap; padding: 0 16px; }
+      .hero, .section, .about-hero { padding-left: 16px; padding-right: 16px; }
+      .hero h1 { font-size: 1.8rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .reviews-layout { grid-template-columns: 1fr; }
+      .about-hero-inner { grid-template-columns: 1fr; }
+      .book-detail-body { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .featured-book { grid-template-columns: 1fr; }
+      .stats-inner { flex-wrap: wrap; }
+      .nav-search { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- =============================================
+     UTILITY BAR
+     A small strip at the very top with links
+============================================= -->
+<div class="utility-bar">
+  <span>Scholarly Online Library — Access to Knowledge</span>
+  <div class="utility-bar-links">
+    <a href="#">Register</a>
+    <a href="#">Sign In</a>
+    <a href="#">Help</a>
+  </div>
+</div>
+
+<!-- =============================================
+     MAIN NAVIGATION
+     The sticky top bar with logo + links + search
+============================================= -->
+<nav class="main-nav">
+  <div class="nav-brand" onclick="showPage('home')">
+    <div class="nav-logo-icon">S</div>
+    <div class="nav-brand-text">Scholarly<span>.</span></div>
+  </div>
+  <div class="nav-links">
+    <div class="nav-link active" id="nav-home"   onclick="showPage('home')">Home</div>
+    <div class="nav-link"        id="nav-menu"   onclick="showPage('menu')">Browse</div>
+    <div class="nav-link"        id="nav-about"  onclick="showPage('about')">About Us</div>
+    <div class="nav-link"        id="nav-review" onclick="showPage('review')">Reviews</div>
+  </div>
+  <div class="nav-search">
+    <input type="text" id="searchInput" placeholder="Search books, authors, topics..." />
+    <button onclick="handleSearch()">Search</button>
+  </div>
+</nav>
+
+<!-- =============================================
+     TOAST NOTIFICATION
+============================================= -->
+<div class="toast" id="toast">
+  <span id="toastMsg">✓ Action completed</span>
+</div>
+
+<!-- =============================================
+     PAGE: HOME
+============================================= -->
+<div class="page active" id="page-home">
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">The World's Knowledge — At Your Fingertips</div>
+      <h1>Discover, Read &amp; Download Scholarly Books</h1>
+      <p>Explore thousands of peer-reviewed books across science, technology, humanities, and more. Free access for registered members.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="showPage('menu')">Browse Library</button>
+        <button class="btn-outline" onclick="showPage('about')">About Us</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-number">48,000+</div>
+        <div class="stat-label">Books Available</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Subject Categories</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">320+</div>
+        <div class="stat-label">Expert Authors</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Library Branches</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Book -->
+  <section class="section" style="background: var(--off-white);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title">
+          <span>Editor's Choice</span>
+          Featured This Month
+        </div>
+      </div>
+      <div class="featured-book">
+        <div class="featured-cover" style="background: linear-gradient(135deg, #00264d, #007a8a);">
+          <div class="featured-cover-title">Principles of Machine Learning</div>
+        </div>
+        <div class="featured-body">
+          <div class="featured-label">⭐ Featured Pick</div>
+          <div class="featured-title">Principles of Machine Learning</div>
+          <div class="featured-author">Dr. Amelia T. Hartwood &amp; Prof. Nasser Al-Rashid</div>
+          <p class="featured-desc">A comprehensive and accessible introduction to the mathematical foundations and real-world applications of machine learning. Covers supervised learning, neural networks, reinforcement learning, and ethical AI — written for advanced undergraduates and practitioners alike.</p>
+          <div class="featured-actions">
+            <button class="btn-primary" onclick="showBookDetail('ml')">View Details</button>
+            <button class="btn-outline" style="color: var(--navy); border-color: var(--navy);" onclick="downloadBook('Principles of Machine Learning')">Download PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recently Added Books -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title">
+          <span>New Arrivals</span>
+          Recently Added
+        </div>
+        <span class="see-all-link" onclick="showPage('menu')">See all books →</span>
+      </div>
+      <div class="books-grid" id="home-books-grid"></div>
+    </div>
+  </section>
+
+  <!-- Multimedia Section -->
+  <section class="section" style="background: var(--navy); color: white;">
+    <div class="section-inner">
+      <div class="section-header" style="border-bottom-color: rgba(255,255,255,0.2);">
+        <div class="section-title" style="color: white;">
+          <span style="color: var(--gold);">Multimedia Resources</span>
+          More Than Just Books
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+
+        <!-- Image resource -->
+        <div style="background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #007a8a, #00264d); display: flex; align-items: center; justify-content: center; font-size: 3rem;">🗺️</div>
+          <div style="padding: 18px;">
+            <div style="font-family: var(--font-ui); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px;">Image Gallery</div>
+            <div style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 8px;">Scientific Diagrams &amp; Illustrations</div>
+            <div style="font-family: var(--font-ui); font-size: 0.8rem; color: rgba(255,255,255,0.6);">High-resolution images and diagrams from our textbook collection.</div>
+          </div>
+        </div>
+
+        <!-- Video resource -->
+        <div style="background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #c8472b, #8b2000); display: flex; align-items: center; justify-content: center; font-size: 3rem;">▶️</div>
+          <div style="padding: 18px;">
+            <div style="font-family: var(--font-ui); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px;">Video Lectures</div>
+            <div style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 8px;">Author Video Series</div>
+            <div style="font-family: var(--font-ui); font-size: 0.8rem; color: rgba(255,255,255,0.6);">Watch authors explain key chapters and research findings directly.</div>
+            <video style="width:100%; border-radius:3px; margin-top:10px;" controls>
+              <source src="" type="video/mp4">
+              <p style="font-size:0.75rem; color: rgba(255,255,255,0.4); margin-top:4px;">Sample video — upload your video file here.</p>
+            </video>
+          </div>
+        </div>
+
+        <!-- Audio resource -->
+        <div style="background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #5b3f8a, #2d1a5e); display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎧</div>
+          <div style="padding: 18px;">
+            <div style="font-family: var(--font-ui); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px;">Audio Books</div>
+            <div style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 8px;">Listen While You Learn</div>
+            <div style="font-family: var(--font-ui); font-size: 0.8rem; color: rgba(255,255,255,0.6);">Select titles available as high-quality audio recordings.</div>
+            <audio style="width:100%; margin-top:10px;" controls>
+              <source src="" type="audio/mpeg">
+              <p style="font-size:0.75rem; color: rgba(255,255,255,0.4); margin-top:4px;">Sample audio — upload your audio file here.</p>
+            </audio>
+          </div>
+        </div>
+
+        <!-- Animation resource -->
+        <div style="background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 100%; height: 160px; background: linear-gradient(135deg, #1a6b2f, #0a3315); display: flex; align-items: center; justify-content: center; font-size: 3rem;">✨</div>
+          <div style="padding: 18px;">
+            <div style="font-family: var(--font-ui); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px;">Animations</div>
+            <div style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 8px;">Interactive Learning Modules</div>
+            <div style="font-family: var(--font-ui); font-size: 0.8rem; color: rgba(255,255,255,0.6);">Animated explainers for complex scientific and mathematical concepts.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-name">Scholarly<span>.</span></div>
+          <p>A premier destination for academic knowledge. We connect readers with the best scholarly content from leading authors and institutions worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Library</h5>
+          <a onclick="showPage('menu')">Browse All Books</a>
+          <a onclick="showPage('menu')">New Arrivals</a>
+          <a onclick="showPage('menu')">Best Sellers</a>
+          <a onclick="showPage('menu')">Open Access</a>
+        </div>
+        <div class="footer-col">
+          <h5>Support</h5>
+          <a>FAQ</a>
+          <a>Contact Us</a>
+          <a>Accessibility</a>
+          <a>Terms of Use</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a onclick="showPage('about')">About Us</a>
+          <a>Careers</a>
+          <a>Press</a>
+          <a onclick="showPage('review')">Reviews</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Scholarly Online Library. All rights reserved.</span>
+        <span>Privacy Policy · Cookie Policy · Legal</span>
+      </div>
+    </div>
+  </footer>
+</div><!-- end page-home -->
+
+<!-- =============================================
+     PAGE: MENU (Browse by Category)
+============================================= -->
+<div class="page" id="page-menu">
+  <section class="section" style="background: var(--off-white); padding-bottom: 32px;">
+    <div class="section-inner">
+      <h1 style="font-family: var(--font-display); font-size: 2rem; color: var(--navy); margin-bottom: 8px;">Browse the Library</h1>
+      <p style="font-family: var(--font-ui); color: var(--mid-gray); font-size: 0.9rem;">Choose a subject category to explore our curated collection of books.</p>
+    </div>
+  </section>
+
+  <!-- Category filter tabs -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title"><span>All Subjects</span>Browse by Category</div>
+      </div>
+      <div class="categories-grid">
+        <div class="category-card" onclick="showCategory('Computer Science')">
+          <div class="category-icon" style="background: #e0f2f5;">💻</div>
+          <div class="category-info">
+            <h3>Computer Science</h3>
+            <p>AI, algorithms, programming, data science</p>
+            <div class="category-count">8,240 Books</div>
+          </div>
+        </div>
+        <div class="category-card" onclick="showCategory('Medicine & Health')">
+          <div class="category-icon" style="background: #fce8e8;">🏥</div>
+          <div class="category-info">
+            <h3>Medicine &amp; Health</h3>
+            <p>Clinical sciences, pharmacology, public health</p>
+            <div class="category-count">6,100 Books</div>
+          </div>
+        </div>
+        <div class="category-card" onclick="showCategory('Engineering')">
+          <div class="category-icon" style="background: #fff4e0;">⚙️</div>
+          <div class="category-info">
+            <h3>Engineering</h3>
+            <p>Electrical, civil, mechanical, chemical</p>
+            <div class="category-count">7,800 Books</div>
+          </div>
+        </div>
+        <div class="category-card" onclick="showCategory('Mathematics')">
+          <div class="category-icon" style="background: #f0e8ff;">📐</div>
+          <div class="category-info">
+            <h3>Mathematics</h3>
+            <p>Pure &amp; applied math, statistics, logic</p>
+            <div class="category-count">4,500 Books</div>
+          </div>
+        </div>
+        <div class="category-card" onclick="showCategory('Natural Sciences')">
+          <div class="category-icon" style="background: #e8f5e9;">🌿</div>
+          <div class="category-info">
+            <h3>Natural Sciences</h3>
+            <p>Physics, chemistry, biology, ecology</p>
+            <div class="category-count">9,200 Books</div>
+          </div>
+        </div>
+        <div class="category-card" onclick="showCategory('Humanities')">
+          <div class="category-icon" style="background: #fff0e0;">📜</div>
+          <div class="category-info">
+            <h3>Humanities</h3>
+            <p>History, philosophy, linguistics, arts</p>
+            <div class="category-count">5,300 Books</div>
+          </div>
+        </div>
+        <div class="category-card" onclick="showCategory('Business')">
+          <div class="category-icon" style="background: #e8f0ff;">📊</div>
+          <div class="category-info">
+            <h3>Business &amp; Economics</h3>
+            <p>Finance, management, marketing, strategy</p>
+            <div class="category-count">6,800 Books</div>
+          </div>
+        </div>
+        <div class="category-card" onclick="showCategory('Social Sciences')">
+          <div class="category-icon" style="background: #fde8f5;">🤝</div>
+          <div class="category-info">
+            <h3>Social Sciences</h3>
+            <p>Sociology, psychology, political science</p>
+            <div class="category-count">4,100 Books</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Books in selected category -->
+  <section class="section" style="background: var(--off-white);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title" id="category-heading"><span>Showing</span>All Books</div>
+      </div>
+      <div class="books-grid" id="menu-books-grid"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span>© 2026 Scholarly Online Library. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+</div><!-- end page-menu -->
+
+<!-- =============================================
+     PAGE: ABOUT US
+============================================= -->
+<div class="page" id="page-about">
+  <section class="about-hero">
+    <div class="about-hero-inner">
+      <div>
+        <div style="font-family: var(--font-ui); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px;">About Scholarly</div>
+        <h1>Connecting Readers<br/>to Knowledge Since 1998</h1>
+        <p>Scholarly is an independent academic publishing and library platform dedicated to making peer-reviewed books accessible to students, researchers, and lifelong learners worldwide.</p>
+        <p>We partner with over 200 universities and research institutions, maintaining a growing collection of more than 48,000 titles across all major disciplines.</p>
+      </div>
+      <div class="branches-grid">
+        <div class="branch-card">
+          <h4>📍 Main Campus Branch</h4>
+          <p>45 University Boulevard, Cairo<br/>+20 2 2345 6789<br/>Mon–Fri: 8am – 9pm</p>
+        </div>
+        <div class="branch-card">
+          <h4>📍 Downtown Branch</h4>
+          <p>12 Tahrir Square, Cairo<br/>+20 2 2987 6543<br/>Mon–Sat: 9am – 8pm</p>
+        </div>
+        <div class="branch-card">
+          <h4>📍 Alexandria Branch</h4>
+          <p>7 Corniche Road, Alexandria<br/>+20 3 4567 8901<br/>Mon–Fri: 9am – 7pm</p>
+        </div>
+        <div class="branch-card">
+          <h4>📍 Giza Branch</h4>
+          <p>88 Pyramids Road, Giza<br/>+20 2 3765 4321<br/>Daily: 10am – 8pm</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission section -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-title"><span>Our Mission</span>What Drives Us</div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
+        <div style="padding: 28px; border: 1px solid var(--light-gray); border-top: 4px solid var(--navy); border-radius: var(--radius);">
+          <div style="font-size: 2rem; margin-bottom: 14px;">📚</div>
+          <h3 style="font-family: var(--font-display); color: var(--navy); margin-bottom: 10px;">Open Access</h3>
+          <p style="font-size: 0.88rem; color: var(--dark-gray); line-height: 1.65;">We believe knowledge should be free. Over 30% of our collection is fully open-access — available to anyone, anywhere, with no subscription required.</p>
+        </div>
+        <div style="padding: 28px; border: 1px solid var(--light-gray); border-top: 4px solid var(--teal); border-radius: var(--radius);">
+          <div style="font-size: 2rem; margin-bottom: 14px;">🔬</div>
+          <h3 style="font-family: var(--font-display); color: var(--navy); margin-bottom: 10px;">Peer-Reviewed Quality</h3>
+          <p style="font-size: 0.88rem; color: var(--dark-gray); line-height: 1.65;">Every title in our collection undergoes a rigorous editorial review process. We maintain the highest standards for accuracy and scholarly integrity.</p>
+        </div>
+        <div style="padding: 28px; border: 1px solid var(--light-gray); border-top: 4px solid var(--accent); border-radius: var(--radius);">
+          <div style="font-size: 2rem; margin-bottom: 14px;">🌍</div>
+          <h3 style="font-family: var(--font-display); color: var(--navy); margin-bottom: 10px;">Global Community</h3>
+          <p style="font-size: 0.88rem; color: var(--dark-gray); line-height: 1.65;">Our readers span 190 countries. We support multilingual content and are committed to diversifying the voices represented in our collection.</p>
+        </div>
+      </div>
+
+      <!-- Contact cards -->
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <h4>Phone</h4>
+          <p>+20 2 2345 6789<br/>+20 2 2345 6790<br/>Mon–Fri, 9am–6pm</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <h4>Email</h4>
+          <p>info@scholarly.eg<br/>support@scholarly.eg<br/>Response within 24h</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">🗺️</div>
+          <h4>Head Office</h4>
+          <p>45 University Boulevard<br/>Cairo, Egypt 11511<br/>Open to visitors daily</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span>© 2026 Scholarly Online Library. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+</div><!-- end page-about -->
+
+<!-- =============================================
+     PAGE: REVIEWS
+============================================= -->
+<div class="page" id="page-review">
+  <section class="section" style="background: var(--off-white); padding-bottom: 32px;">
+    <div class="section-inner">
+      <h1 style="font-family: var(--font-display); font-size: 2rem; color: var(--navy); margin-bottom: 8px;">Reader Reviews</h1>
+      <p style="font-family: var(--font-ui); color: var(--mid-gray); font-size: 0.9rem;">Share your thoughts and read what others say about our collection.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner reviews-layout">
+
+      <!-- Left: List of reviews -->
+      <div id="reviews-list">
+        <!-- Reviews injected by JS -->
+      </div>
+
+      <!-- Right: Submit review form -->
+      <div class="review-form-panel">
+        <h3>Submit Your Review</h3>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="review-name" placeholder="e.g., Ahmed Hassan" />
+        </div>
+        <div class="form-group">
+          <label>Book Title</label>
+          <select id="review-book">
+            <option value="">Select a book…</option>
+            <option>Principles of Machine Learning</option>
+            <option>Introduction to Organic Chemistry</option>
+            <option>Modern History of the Middle East</option>
+            <option>Calculus: Theory and Applications</option>
+            <option>Behavioral Economics</option>
+            <option>Foundations of Civil Engineering</option>
+            <option>Clinical Psychology Handbook</option>
+            <option>Data Structures &amp; Algorithms</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Your Rating</label>
+          <div class="star-rating" id="starRating">
+            <span onclick="setRating(1)">★</span>
+            <span onclick="setRating(2)">★</span>
+            <span onclick="setRating(3)">★</span>
+            <span onclick="setRating(4)">★</span>
+            <span onclick="setRating(5)">★</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Your Review</label>
+          <textarea id="review-text" placeholder="Share your experience with this book…"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitReview()">Submit Review</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span>© 2026 Scholarly Online Library. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+</div><!-- end page-review -->
+
+<!-- =============================================
+     PAGE: BOOK DETAIL VIEW
+============================================= -->
+<div class="page" id="page-book-detail">
+  <button class="back-btn" onclick="goBack()">← Back</button>
+  <div id="book-detail-content">
+    <!-- Injected by JS -->
+  </div>
+</div>
+
+<!-- =============================================
+     JAVASCRIPT
+     All page logic, data, and interactions
+============================================= -->
+<script>
+  // =============================================
+  // DATA: Our library's book collection
+  // Each book object holds all the info we display
+  // =============================================
+  const books = [
+    {
+      id: 'ml',
+      title: 'Principles of Machine Learning',
+      author: 'Dr. Amelia T. Hartwood & Prof. Nasser Al-Rashid',
+      category: 'Computer Science',
+      year: 2024,
+      pages: 580,
+      isbn: '978-0-123456-78-9',
+      color: 'linear-gradient(135deg, #005f8a, #003865)',
+      desc: 'A comprehensive and accessible introduction to the mathematical foundations and real-world applications of machine learning. Covers supervised learning, neural networks, reinforcement learning, and ethical AI.',
+      fullDesc: 'This landmark textbook bridges the gap between theoretical rigor and practical application in modern machine learning. Starting from linear algebra and probability theory, it builds step-by-step to cover the full landscape of contemporary ML: regression, classification, neural networks, convolutional and recurrent architectures, transformers, reinforcement learning, and responsible AI practices. Rich with worked examples, Python code exercises, and case studies from healthcare, finance, and engineering, this book is essential for advanced undergraduates and practicing data scientists alike.'
+    },
+    {
+      id: 'chem',
+      title: 'Introduction to Organic Chemistry',
+      author: 'Prof. Sara El-Masri',
+      category: 'Natural Sciences',
+      year: 2023,
+      pages: 712,
+      isbn: '978-0-234567-89-0',
+      color: 'linear-gradient(135deg, #1a6b2f, #0a3315)',
+      desc: 'A thorough, visually-rich introduction to organic chemistry for undergraduate students, with abundant reaction mechanisms and laboratory guidance.',
+      fullDesc: 'Organic chemistry is the gateway to medicine, pharmacology, and materials science. This textbook presents the subject with unusual clarity, using visual 3D molecular models alongside traditional structural formulas. The book covers alkanes, alkenes, alkynes, aromatic compounds, stereochemistry, carbonyl chemistry, amines, and bioorganic macromolecules. Each chapter ends with synthesis exercises designed to build genuine problem-solving intuition.'
+    },
+    {
+      id: 'history',
+      title: 'Modern History of the Middle East',
+      author: 'Dr. Khalid Mansour',
+      category: 'Humanities',
+      year: 2022,
+      pages: 440,
+      isbn: '978-0-345678-90-1',
+      color: 'linear-gradient(135deg, #8b4500, #5c2c00)',
+      desc: 'A balanced scholarly account of the Middle East from the fall of the Ottoman Empire to the present, examining political, social, and cultural transformations.',
+      fullDesc: 'Drawing on primary Arabic, Turkish, and Persian sources alongside Western archives, this authoritative history reframes the modern Middle East from within. The book covers the collapse of the Ottomans, mandate periods, independence movements, the oil era, regional wars, and the Arab Spring with equal attention to states, communities, and individuals. Essential reading for students of history, international relations, and area studies.'
+    },
+    {
+      id: 'calc',
+      title: 'Calculus: Theory and Applications',
+      author: 'Prof. Mia Chen & Dr. Rami Youssef',
+      category: 'Mathematics',
+      year: 2024,
+      pages: 810,
+      isbn: '978-0-456789-01-2',
+      color: 'linear-gradient(135deg, #5b3f8a, #2d1a5e)',
+      desc: 'A rigorous yet approachable calculus text for first-year university students, covering single and multivariable calculus with applications in physics and engineering.',
+      fullDesc: 'This calculus text achieves an unusual balance: it proves every major theorem carefully while always motivating abstract concepts with vivid physical and geometric examples. Limits, derivatives, integrals, sequences and series, vectors, partial derivatives, and multiple integration are developed systematically. Hundreds of exercises range from routine practice to challenging proof problems, with full solutions available online.'
+    },
+    {
+      id: 'econ',
+      title: 'Behavioral Economics',
+      author: 'Dr. Layla Farouq',
+      category: 'Business',
+      year: 2023,
+      pages: 380,
+      isbn: '978-0-567890-12-3',
+      color: 'linear-gradient(135deg, #2c5f8a, #0e3a5c)',
+      desc: 'An engaging exploration of how psychology shapes economic decisions, with lessons for policy, business strategy, and personal finance.',
+      fullDesc: 'Why do people consistently make choices that contradict classical economic models? This book answers that question by synthesizing 50 years of experimental psychology and behavioral economics research. Topics include loss aversion, cognitive biases, nudge theory, social preferences, and market anomalies. Real-world case studies from consumer behaviour, public policy, and healthcare illustrate how these insights are being applied today.'
+    },
+    {
+      id: 'civil',
+      title: 'Foundations of Civil Engineering',
+      author: 'Prof. Ahmed Farouk',
+      category: 'Engineering',
+      year: 2022,
+      pages: 650,
+      isbn: '978-0-678901-23-4',
+      color: 'linear-gradient(135deg, #c8472b, #7a1a0a)',
+      desc: 'A comprehensive introduction to civil engineering fundamentals including structural mechanics, materials, hydraulics, and project management.',
+      fullDesc: 'This textbook provides a complete first course in civil engineering, covering structural analysis, soil mechanics, fluid mechanics, transportation systems, environmental engineering, and construction management. Richly illustrated case studies from real infrastructure projects — from bridges to water treatment plants — ground abstract theory in professional practice. The book is aligned with international engineering accreditation standards and includes exam-style worked problems.'
+    },
+    {
+      id: 'psych',
+      title: 'Clinical Psychology Handbook',
+      author: 'Dr. Nadia El-Sayed & Prof. Omar Taha',
+      category: 'Medicine & Health',
+      year: 2024,
+      pages: 520,
+      isbn: '978-0-789012-34-5',
+      color: 'linear-gradient(135deg, #006655, #003322)',
+      desc: 'A definitive handbook for clinical psychology students and practitioners, covering assessment, diagnosis, evidence-based therapies, and professional ethics.',
+      fullDesc: 'Written by leading clinicians and researchers, this handbook offers the most current synthesis of clinical psychology theory and practice. Diagnostic frameworks including DSM-5-TR and ICD-11 are presented comparatively. Assessment chapters cover psychological testing, structured interviews, and neuropsychological evaluation. Treatment sections address CBT, psychodynamic therapy, DBT, ACT, family systems, and pharmacological co-treatments. Chapters on cultural competence and professional ethics round out this essential reference.'
+    },
+    {
+      id: 'dsa',
+      title: 'Data Structures & Algorithms',
+      author: 'Dr. Youssef Ibrahim',
+      category: 'Computer Science',
+      year: 2023,
+      pages: 490,
+      isbn: '978-0-890123-45-6',
+      color: 'linear-gradient(135deg, #00264d, #004080)',
+      desc: 'A clear, implementation-focused guide to the data structures and algorithms every computer science student must master.',
+      fullDesc: 'Mastering data structures and algorithms is the cornerstone of professional software engineering. This book presents arrays, linked lists, stacks, queues, trees, heaps, graphs, and hash tables with full implementations in Python and C++. Algorithm analysis using Big-O notation is developed rigorously. Separate chapters cover sorting, searching, dynamic programming, greedy algorithms, graph traversal, and NP-completeness. Interview-style problem sets prepare readers for technical employment challenges.'
+    }
+  ];
+
+  // =============================================
+  // STATE: track current page and selected category
+  // =============================================
+  let currentPage    = 'home';
+  let previousPage   = 'home';
+  let currentRating  = 0;
+  let currentCategory = 'All';
+
+  // Seed reviews
+  let reviews = [
+    { name: 'Fatima H.', book: 'Principles of Machine Learning', rating: 5, text: 'Absolutely brilliant textbook. The progression from theory to application is seamless, and the Python examples are genuinely useful for real projects.', date: 'April 28, 2026' },
+    { name: 'Mohamed A.', book: 'Data Structures & Algorithms', rating: 5, text: 'Best DSA book I have come across. Youssef Ibrahim explains complex concepts with unusual simplicity. My whole study group uses this.', date: 'April 15, 2026' },
+    { name: 'Sara K.', book: 'Behavioral Economics', rating: 4, text: 'Very readable and the case studies are genuinely interesting. Would love a bit more mathematical depth in certain chapters, but otherwise excellent.', date: 'March 30, 2026' },
+    { name: 'Omar R.', book: 'Modern History of the Middle East', rating: 5, text: 'Rare to find a history book this balanced and well-sourced. The use of primary Arabic sources makes it stand apart from Western-centric accounts.', date: 'March 12, 2026' },
+  ];
+
+  // =============================================
+  // FUNCTION: showPage(id)
+  // Hides all pages and shows the target one.
+  // Also updates the nav link highlights.
+  // =============================================
+  function showPage(id) {
+    previousPage = currentPage;
+    currentPage  = id;
+
+    // Hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // Show target
+    document.getElementById('page-' + id).classList.add('active');
+
+    // Update nav active state
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+
+    // Scroll to top on page change
+    window.scrollTo(0, 0);
+
+    // Initialize page-specific content
+    if (id === 'home')   renderHomeBooks();
+    if (id === 'menu')   renderMenuBooks();
+    if (id === 'review') renderReviews();
+  }
+
+  // =============================================
+  // FUNCTION: goBack()
+  // Returns from book detail to previous page
+  // =============================================
+  function goBack() {
+    showPage(previousPage);
+  }
+
+  // =============================================
+  // FUNCTION: renderHomeBooks()
+  // Fills the homepage "Recently Added" grid
+  // =============================================
+  function renderHomeBooks() {
+    const grid = document.getElementById('home-books-grid');
+    grid.innerHTML = books.slice(0, 6).map(b => bookCardHTML(b)).join('');
+  }
+
+  // =============================================
+  // FUNCTION: renderMenuBooks(category)
+  // Fills the menu page book grid, optionally filtered
+  // =============================================
+  function renderMenuBooks(category) {
+    const filtered = category
+      ? books.filter(b => b.category === category)
+      : books;
+
+    const heading = document.getElementById('category-heading');
+    heading.innerHTML = `<span>Showing</span>${category || 'All Books'}`;
+
+    const grid = document.getElementById('menu-books-grid');
+    grid.innerHTML = filtered.map(b => bookCardHTML(b)).join('');
+  }
+
+  // =============================================
+  // FUNCTION: bookCardHTML(book)
+  // Returns HTML string for one book card.
+  // Used in both Home and Menu grids.
+  // =============================================
+  function bookCardHTML(b) {
+    return `
+      <div class="book-card" onclick="showBookDetail('${b.id}')">
+        <div class="book-cover" style="background: ${b.color};">
+          <div class="book-cover-title">${b.title}</div>
+        </div>
+        <div class="book-info">
+          <div class="book-author">${b.author.split('&')[0].trim()}</div>
+          <div class="book-title">${b.title}</div>
+          <div class="book-meta">
+            <span class="book-badge">${b.category}</span>
+            <button class="book-download-btn" onclick="event.stopPropagation(); downloadBook('${b.title}')">PDF ↓</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // =============================================
+  // FUNCTION: showCategory(name)
+  // Filters the menu books by category
+  // =============================================
+  function showCategory(name) {
+    currentCategory = name;
+    renderMenuBooks(name);
+    // Smooth scroll down to the books grid
+    document.getElementById('menu-books-grid')
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // =============================================
+  // FUNCTION: showBookDetail(id)
+  // Renders the full book detail view
+  // =============================================
+  function showBookDetail(id) {
+    const b = books.find(bk => bk.id === id);
+    if (!b) return;
+    previousPage = currentPage;
+
+    const html = `
+      <div class="book-detail-header">
+        <div class="book-detail-cover" style="background: ${b.color};">
+          <div class="book-detail-cover-title">${b.title}</div>
+        </div>
+        <div class="book-detail-meta">
+          <h1>${b.title}</h1>
+          <div class="author">${b.author}</div>
+          <div class="book-detail-tags">
+            <span class="tag">${b.category}</span>
+            <span class="tag">${b.year}</span>
+            <span class="tag">${b.pages} pages</span>
+          </div>
+        </div>
+      </div>
+      <div class="book-detail-body">
+        <div class="book-detail-desc">
+          <h2>About This Book</h2>
+          <p>${b.fullDesc}</p>
+          <h2 style="margin-top: 28px;">Key Topics Covered</h2>
+          <p style="font-size: 0.88rem; line-height: 1.7; color: var(--dark-gray);">
+            This volume provides comprehensive coverage suitable for both introductory courses and advanced independent study. Each chapter begins with learning objectives and ends with summaries, key terms, and graded exercises.
+          </p>
+        </div>
+        <div>
+          <div class="book-detail-sidebar-card">
+            <h4>Book Information</h4>
+            <div class="detail-meta-row"><span class="label">Author(s)</span><span class="value" style="max-width:160px; text-align:right;">${b.author}</span></div>
+            <div class="detail-meta-row"><span class="label">Year</span><span class="value">${b.year}</span></div>
+            <div class="detail-meta-row"><span class="label">Pages</span><span class="value">${b.pages}</span></div>
+            <div class="detail-meta-row"><span class="label">Category</span><span class="value">${b.category}</span></div>
+            <div class="detail-meta-row"><span class="label">ISBN</span><span class="value">${b.isbn}</span></div>
+            <div class="detail-meta-row"><span class="label">Format</span><span class="value">PDF, EPUB</span></div>
+            <button class="download-full-btn" onclick="downloadBook('${b.title}')">⬇ Download Full Book</button>
+          </div>
+        </div>
+      </div>`;
+
+    document.getElementById('book-detail-content').innerHTML = html;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-book-detail').classList.add('active');
+    currentPage = 'book-detail';
+    window.scrollTo(0, 0);
+  }
+
+  // =============================================
+  // FUNCTION: downloadBook(title)
+  // Simulates a book download with a toast notification
+  // =============================================
+  function downloadBook(title) {
+    showToast('⬇ Downloading "' + title + '" …');
+  }
+
+  // =============================================
+  // FUNCTION: showToast(msg)
+  // Shows a temporary notification at bottom-right
+  // =============================================
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  // =============================================
+  // FUNCTION: handleSearch()
+  // Simple search: filters books by title or author
+  // and navigates to the menu page with results
+  // =============================================
+  function handleSearch() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    if (!query) return;
+
+    showPage('menu');
+
+    const filtered = books.filter(b =>
+      b.title.toLowerCase().includes(query) ||
+      b.author.toLowerCase().includes(query) ||
+      b.category.toLowerCase().includes(query)
+    );
+
+    const heading = document.getElementById('category-heading');
+    heading.innerHTML = `<span>Search Results for</span>"${query}"`;
+
+    const grid = document.getElementById('menu-books-grid');
+    if (filtered.length === 0) {
+      grid.innerHTML = `<p style="font-family: var(--font-ui); color: var(--mid-gray); grid-column: 1/-1;">No books found matching your search.</p>`;
+    } else {
+      grid.innerHTML = filtered.map(b => bookCardHTML(b)).join('');
+    }
+  }
+
+  // Allow pressing Enter in the search box
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleSearch();
+  });
+
+  // =============================================
+  // FUNCTION: renderReviews()
+  // Fills the reviews list on the review page
+  // =============================================
+  function renderReviews() {
+    const list = document.getElementById('reviews-list');
+    list.innerHTML = reviews.map(r => `
+      <div class="review-card">
+        <div class="review-card-header">
+          <div>
+            <div class="reviewer-name">${r.name}</div>
+            <div class="review-book">📖 ${r.book}</div>
+          </div>
+          <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+        </div>
+        <p class="review-text">"${r.text}"</p>
+        <div class="review-date">${r.date}</div>
+      </div>`).join('');
+  }
+
+  // =============================================
+  // FUNCTION: setRating(n)
+  // Highlights the star rating the user selects
+  // =============================================
+  function setRating(n) {
+    currentRating = n;
+    document.querySelectorAll('#starRating span').forEach((s, i) => {
+      s.classList.toggle('active', i < n);
+    });
+  }
+
+  // =============================================
+  // FUNCTION: submitReview()
+  // Validates the form and adds the review to the list
+  // =============================================
+  function submitReview() {
+    const name = document.getElementById('review-name').value.trim();
+    const book = document.getElementById('review-book').value;
+    const text = document.getElementById('review-text').value.trim();
+
+    // Basic validation
+    if (!name || !book || !text || currentRating === 0) {
+      showToast('⚠ Please fill in all fields and select a rating.');
+      return;
+    }
+
+    // Add new review to the top of the array
+    reviews.unshift({
+      name,
+      book,
+      rating: currentRating,
+      text,
+      date: new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })
+    });
+
+    // Re-render the list
+    renderReviews();
+
+    // Reset the form
+    document.getElementById('review-name').value = '';
+    document.getElementById('review-book').value = '';
+    document.getElementById('review-text').value = '';
+    setRating(0);
+
+    showToast('✓ Your review was submitted successfully!');
+  }
+
+  // =============================================
+  // INITIALIZE: Run on page load
+  // =============================================
+  renderHomeBooks();
+  renderReviews();
+</script>
+
+</body>
+</html>
